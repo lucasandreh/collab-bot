@@ -1,5 +1,5 @@
 import { GuildMemberRoleManager, MessageEmbed } from 'discord.js';
-import type { Message } from 'discord.js';
+import type { Client, Message } from 'discord.js';
 import config from '../config';
 
 const { prefix } = config;
@@ -29,7 +29,8 @@ class Cargos {
         }
     }
 
-    public addCargo(message: Message) {
+    public addCargo(message: Message, client: Client) {
+
         if(message.content.startsWith(prefix + 'addCargo')) {
             const roleManager = new GuildMemberRoleManager(message.member);
             const cargos = [];
@@ -40,9 +41,9 @@ class Cargos {
             const expecificRole = cargos.find(cargo => cargo.name === needRole);
 
             if(expecificRole) {
-                message.reply(`você recebeu o cargo **${expecificRole.name}**`);
-    
-                return roleManager.add(expecificRole.id);
+                roleManager.add(expecificRole.id)
+                .then(result => message.reply(`você recebeu o cargo **${expecificRole.name}**`))
+                .catch(err => message.reply('esse cargo não está disponível.'));
             }else {
                 return message.reply('Esse cargo não existe.');
             }
