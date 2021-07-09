@@ -1,5 +1,5 @@
 import { GuildMemberRoleManager, MessageEmbed } from 'discord.js';
-import type { Client, Message } from 'discord.js';
+import type { Message } from 'discord.js';
 import config from '../config';
 
 const { prefix } = config;
@@ -29,7 +29,7 @@ class Cargos {
         }
     }
 
-    public addCargo(message: Message, client: Client) {
+    public addCargo(message: Message) {
 
         if(message.content.startsWith(prefix + 'addCargo')) {
             const roleManager = new GuildMemberRoleManager(message.member);
@@ -41,7 +41,7 @@ class Cargos {
             const expecificRole = cargos.find(cargo => cargo.name === needRole);
 
             if(expecificRole) {
-                roleManager.add(expecificRole.id)
+               return roleManager.add(expecificRole.id)
                 .then(result => message.reply(`você recebeu o cargo **${expecificRole.name}**`))
                 .catch(err => message.reply('esse cargo não está disponível.'));
             }else {
@@ -62,9 +62,10 @@ class Cargos {
             const expecificRole = cargos.find(cargo => cargo.name === needRole);
 
             if(expecificRole) {
-                message.reply(`você removeu o cargo **${expecificRole.name}**`);
+                return roleManager.remove(expecificRole.id)
+                .then(result => message.reply(`você removeu o cargo **${expecificRole.name}**`))
+                .catch(err => message.reply('esse cargo não está disponível.'));
     
-                return roleManager.remove(expecificRole.id);
             }else {
                 return message.reply('Esse cargo não existe.');
             }
