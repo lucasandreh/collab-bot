@@ -2,8 +2,9 @@ import { Client } from 'discord.js';
 import config from './config';
 import Cargos from './commands/Cargos';
 import Commands from './commands/Commands';
+import Convite from './commands/Convite';
 
-const { token } = config;
+const { token, dev_token } = config;
 
 const client = new Client();
 
@@ -20,10 +21,13 @@ client.on('message', message => {
 
     // COMANDOS REFERENTES AOS CARGOS DO SERVIDOR
     const cargos = new Cargos();
-
     cargos.listarCargos(message);
     cargos.addCargo(message);
     cargos.removeCargo(message);
+
+    // GERAR CÓDIGO DE CONVITE
+    const convite = new Convite();
+    convite.create(message, client);
 });
 
 
