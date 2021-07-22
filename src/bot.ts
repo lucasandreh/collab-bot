@@ -3,6 +3,7 @@ import config from './config';
 import Cargos from './commands/Cargos';
 import Commands from './commands/Commands';
 import Convite from './commands/Convite';
+import Vote from './commands/Vote';
 
 const { token, dev_token } = config;
 
@@ -11,6 +12,11 @@ const client = new Client();
 
 client.on('ready', () => {
     console.log(`Logged in ${client.user.username}`);
+    client.user.setActivity('Collab Developers', {
+        name: 'Collab Developers', 
+        type: 'PLAYING',
+        url: 'https://discord.gg/CXFpDzqcGt'
+    });
 });
 
 client.on('message', message => {
@@ -28,8 +34,10 @@ client.on('message', message => {
     // GERAR CÓDIGO DE CONVITE
     const convite = new Convite();
     convite.create(message, client);
+
+    // VOTAÇÁO NO CANAL DE SUGESTÕES
+    const vote = new Vote();
+    vote.exec(message);
 });
-
-
 
 client.login(token);

@@ -24,7 +24,8 @@ class Cargos {
             embed.setColor('#6437C4');
             embed.setThumbnail('https://cdn.discordapp.com/attachments/859924310835855381/859925407424053288/collab_meta_img_1.png');
             embed.setDescription(`**${roles.join(`\n`)}**`);
-    
+            
+            message.delete();
             return await message.channel.send(embed);
         }
     }
@@ -40,6 +41,7 @@ class Cargos {
 
             const expecificRole = cargos.find(cargo => cargo.name === needRole);
 
+            message.delete();
             if(expecificRole) {
                return roleManager.add(expecificRole.id)
                 .then(result => message.reply(`você recebeu o cargo **${expecificRole.name}**`))
@@ -60,6 +62,8 @@ class Cargos {
             const [, needRole] = message.content.split(' ');
 
             const expecificRole = cargos.find(cargo => cargo.name === needRole);
+
+            message.delete();
 
             if(expecificRole) {
                 return roleManager.remove(expecificRole.id)
