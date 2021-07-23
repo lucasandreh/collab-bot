@@ -4,7 +4,11 @@ import Cargos from './commands/Cargos';
 import Commands from './commands/Commands';
 import Convite from './commands/Convite';
 import Vote from './commands/Vote';
+<<<<<<< HEAD
 import CountVotes from './commands/CountVotes';
+=======
+import Github from './commands/Github';
+>>>>>>> 439f65fa00d2afeccfc0cb94a919ef3c75a85821
 
 const { token, dev_token } = config;
 
@@ -38,8 +42,16 @@ client.on('message', message => {
 
     // VOTAÇÁO NO CANAL DE SUGESTÕES
     const vote = new Vote();
+<<<<<<< HEAD
     vote.exec(message, client);
    
+=======
+    vote.exec(message);
+
+    // MOSTRAR O GITHUB DO BOT
+    const github = new Github();
+    github.exec(message);
+>>>>>>> 439f65fa00d2afeccfc0cb94a919ef3c75a85821
 });
 
 client.on('messageReactionAdd', async (reaction, user) => {
