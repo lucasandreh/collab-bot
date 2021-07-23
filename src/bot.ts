@@ -4,6 +4,7 @@ import Cargos from './commands/Cargos';
 import Commands from './commands/Commands';
 import Convite from './commands/Convite';
 import Vote from './commands/Vote';
+import Github from './commands/Github';
 
 const { token, dev_token } = config;
 
@@ -38,6 +39,10 @@ client.on('message', message => {
     // VOTAÇÁO NO CANAL DE SUGESTÕES
     const vote = new Vote();
     vote.exec(message);
+
+    // MOSTRAR O GITHUB DO BOT
+    const github = new Github();
+    github.exec(message);
 });
 
 client.login(token);
