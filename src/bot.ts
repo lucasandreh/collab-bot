@@ -4,6 +4,7 @@ import Cargos from './commands/Cargos';
 import Commands from './commands/Commands';
 import Convite from './commands/Convite';
 import Vote from './commands/Vote';
+import CountVotes from './commands/CountVotes';
 
 const { token, dev_token } = config;
 
@@ -37,7 +38,14 @@ client.on('message', message => {
 
     // VOTAÇÁO NO CANAL DE SUGESTÕES
     const vote = new Vote();
-    vote.exec(message);
+    vote.exec(message, client);
+   
 });
 
-client.login(token);
+client.on('messageReactionAdd', async (reaction, user) => {
+    // CONTAGEM DE VOTOS
+    const countVotes = new CountVotes();
+    await countVotes.exec(reaction, user);
+});
+
+client.login(dev_token);
